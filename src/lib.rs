@@ -1,17 +1,17 @@
 use std::{fmt::Debug, fs};
 
-fn read_file(path: &str) -> String {
+pub fn read_file(path: &str) -> String {
     fs::read_to_string(path).unwrap().trim().to_string()
 }
 
-fn to_map(input: &str) -> Vec<Vec<char>> {
+pub fn to_map(input: &str) -> Vec<Vec<char>> {
     input
         .lines()
         .map(|l| l.chars().collect::<Vec<char>>())
         .collect::<Vec<Vec<char>>>()
 }
 
-fn to_type_map<N: std::str::FromStr>(input: String) -> Vec<Vec<N>>
+pub fn to_type_map<N: std::str::FromStr>(input: String) -> Vec<Vec<N>>
 where
     <N as std::str::FromStr>::Err: Debug,
 {
@@ -25,11 +25,11 @@ where
         .collect()
 }
 
-fn calculate_limits<N>(map: &[Vec<N>]) -> (usize, usize) {
+pub fn calculate_limits<N>(map: &[Vec<N>]) -> (usize, usize) {
     (map.len() - 1, map[0].len() - 1)
 }
 
-fn get_offset_position(
+pub fn get_offset_position(
     (x, y): (usize, usize),
     (dx, dy): (i32, i32),
     (xlim, ylim): (usize, usize),
