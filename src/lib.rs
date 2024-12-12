@@ -11,7 +11,7 @@ pub fn to_map(input: &str) -> Vec<Vec<char>> {
         .collect::<Vec<Vec<char>>>()
 }
 
-pub fn to_type_map<N: std::str::FromStr>(input: String) -> Vec<Vec<N>>
+pub fn to_type_map<N: std::str::FromStr>(input: &str) -> Vec<Vec<N>>
 where
     <N as std::str::FromStr>::Err: Debug,
 {
@@ -72,7 +72,7 @@ mod tests {
             ]
         );
 
-        let num_map = to_type_map::<u8>(input);
+        let num_map = to_type_map::<u8>(&input);
         assert_eq!(
             num_map,
             vec![vec![0, 1, 2, 3], vec![4, 5, 6, 7], vec![8, 9, 0, 1]]
