@@ -26,7 +26,7 @@ where
 }
 
 pub fn calculate_limits<N>(map: &[Vec<N>]) -> (usize, usize) {
-    (map.len() - 1, map[0].len() - 1)
+    (map[0].len() - 1, map.len() - 1)
 }
 
 pub fn get_offset_position(
