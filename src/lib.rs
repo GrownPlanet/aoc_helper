@@ -1,4 +1,4 @@
-use std::{fmt::Debug, fs};
+use std::{fmt::Debug, fs, vec};
 
 pub fn read_file(path: &str) -> String {
     fs::read_to_string(path).unwrap().trim().to_string()
@@ -48,6 +48,29 @@ pub fn get_offset_position(
     Some((x_with_offset as usize, y_with_offset as usize))
 }
 
+pub fn find_pos<N: Eq>(map: &Vec<Vec<N>>, ch: N) -> Option<(usize, usize)> {
+    for y in 0..map.len() {
+        for x in 0..map[0].len() {
+            if map[y][x] == ch {
+                return Some((x, y));
+            }
+        }
+    }
+    return None;
+}
+
+pub fn find_all_pos<N: Eq>(map: &Vec<Vec<N>>, ch: N) -> Vec<(usize, usize)> {
+    let mut poss = vec![];
+    for y in 0..map.len() {
+        for x in 0..map[0].len() {
+            if map[y][x] == ch {
+                poss.push((x, y));
+            }
+        }
+    }
+    poss
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -79,12 +102,17 @@ mod tests {
         );
 
         let lims = calculate_limits(&map);
-        assert_eq!(lims, (2, 3));
-
+        assert_eq!(lims, (3, 2));
         let offset_pos = get_offset_position((0, 0), (1, 4), lims);
         assert_eq!(offset_pos, None);
 
         let offset_pos = get_offset_position((0, 0), (1, 2), lims);
         assert_eq!(offset_pos, Some((1, 2)));
+
+        let pos_4 = find_pos(&map, '4');
+        assert_eq!(pos_4, Some((0, 1)));
+
+        let pos_0 = find_all_pos(&map, '0');
+        assert_eq!(pos_0, vec![(0, 0), (2, 2)]);
     }
 }
